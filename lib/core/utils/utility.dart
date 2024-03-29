@@ -258,6 +258,8 @@ class Utility{
     int nextId = await _getNextId(box);
     box.put(nextId, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: nextId,socialMediaType: "Google"));
     await box.close();
+    urlTitleController.clear();
+    urlController.clear();
     weblinkController.getData();
     Get.back();
   }
@@ -266,6 +268,8 @@ class Utility{
     final box = await Hive.openBox<WebLinksModel>(hiveBoxName);
     box.put(weblinkModel.id, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: weblinkModel.id,socialMediaType: "Google"));
     await box.close();
+    urlTitleController.clear();
+    urlController.clear();
     weblinkController.getData();
     Get.back();
   }
