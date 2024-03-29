@@ -9,6 +9,12 @@ class WeblinkController extends GetxController{
   var list = <WebLinksModel>[].obs;
   var validateUrlTitle = false.obs;
   var validateURl =false.obs;
+  var urlDataType = "".obs;
+
+  void setUrlType(String urlType){
+    urlDataType = urlType.obs;
+    update();
+  }
 
   void getData() async {
     var box =  await Hive.openBox<WebLinksModel>(hiveBoxName);

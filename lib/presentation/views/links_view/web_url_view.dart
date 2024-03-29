@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:links_feature/core/utils/constants.dart';
 import 'package:links_feature/presentation/controllers/web_link_controller.dart';
 
 import '../../../core/utils/utility.dart';
@@ -24,7 +22,9 @@ class _URLViewState extends State<URLView> {
   Widget build(BuildContext context) {
     var controller = Get.put(WeblinkController());
     controller.getData();
-    return GetBuilder<WeblinkController>(builder: (linksController) => getLinksList(linksController));
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+    body: GetBuilder<WeblinkController>(builder: (linksController) => getLinksList(linksController)));
   }
 
   Widget getLinksList(WeblinkController linkController){
@@ -57,6 +57,7 @@ class _URLViewState extends State<URLView> {
                         ),
                       ),
                       IconButton(onPressed: (){
+                        linkController.setUrlType(linkController.list[index].socialMediaType);
                         Utility.showBottomSheet(context,linkController.list[index] , true);
 
                       }, icon: const Icon(Icons.edit_note, color: Colors.green,)),
