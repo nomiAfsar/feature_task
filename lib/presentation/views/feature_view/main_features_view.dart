@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:links_feature/core/utils/constants.dart';
 import 'package:links_feature/core/utils/utility.dart';
+import 'package:links_feature/data/models/web_links_model.dart';
 import 'package:links_feature/presentation/controllers/feature_controller.dart';
 import 'package:links_feature/presentation/views/empty_view/empty_feature_view.dart';
 import 'package:links_feature/presentation/views/links_view/web_url_view.dart';
@@ -19,11 +20,16 @@ class _FeatureViewState extends State<FeatureView> {
     Get.put(FeatureController());
     return GetBuilder<FeatureController>(builder: (featureController) => Scaffold(
         appBar: AppBar(
-          title: const Text(featureAppTitle),
+          title: const Text(featureAppTitle,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w400
+          ),),
           backgroundColor: Colors.green,
+
         ),
         floatingActionButton: FloatingActionButton(onPressed: (){
-          Utility.showBottomSheet(context);
+          Utility.showBottomSheet(context, WebLinksModel(id: 00, socialMediaType: '', urlTitle: '', url: ''));
         }, child:  const Icon(Icons.add)),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {

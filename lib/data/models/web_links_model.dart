@@ -2,12 +2,18 @@ import 'package:hive/hive.dart';
 part 'web_links_model.g.dart';
 
 @HiveType(typeId: 1)
-class WebLinksModel {
+class WebLinksModel extends HiveObject {
   @HiveField(0)
-  String url="";
+  int id;
 
   @HiveField(1)
+  String url="";
+
+  @HiveField(2)
   String urlTitle;
 
-  WebLinksModel({required this.urlTitle, required this.url});
+  @HiveField(3)
+  String socialMediaType;
+
+  WebLinksModel({required this.id, required this.socialMediaType,required this.urlTitle, required this.url});
 }

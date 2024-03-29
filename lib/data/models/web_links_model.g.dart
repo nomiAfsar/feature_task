@@ -17,19 +17,25 @@ class WebLinksModelAdapter extends TypeAdapter<WebLinksModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return WebLinksModel(
-      urlTitle: fields[1] as String,
-      url: fields[0] as String,
+      id: fields[0],
+      socialMediaType: fields[3] as String,
+      urlTitle: fields[2] as String,
+      url: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, WebLinksModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.url)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.urlTitle);
+      ..write(obj.url)
+      ..writeByte(2)
+      ..write(obj.urlTitle)
+      ..writeByte(3)
+      ..write(obj.socialMediaType);
   }
 
   @override
