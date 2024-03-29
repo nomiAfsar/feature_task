@@ -4,6 +4,8 @@ import 'package:hive/hive.dart';
 import 'package:links_feature/core/utils/constants.dart';
 import 'package:links_feature/presentation/controllers/web_link_controller.dart';
 
+import '../../../core/utils/utility.dart';
+
 
 class URLView extends StatefulWidget {
   const URLView({super.key});
@@ -55,6 +57,7 @@ class _URLViewState extends State<URLView> {
                         ),
                       ),
                       IconButton(onPressed: (){
+                        Utility.showBottomSheet(context,linkController.list[index] , true);
 
                       }, icon: const Icon(Icons.edit_note, color: Colors.green,)),
                       IconButton(onPressed: (){

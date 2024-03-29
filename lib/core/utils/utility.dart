@@ -11,7 +11,11 @@ class Utility{
   static TextEditingController urlController = TextEditingController();
   static TextEditingController urlTitleController = TextEditingController();
 
-  static void showBottomSheet(BuildContext context, WebLinksModel webLinksModel) {
+  static void showBottomSheet(BuildContext context, WebLinksModel webLinksModel, bool isEdit) {
+    if(isEdit){
+      urlController.text = webLinksModel.url;
+      urlTitleController.text = webLinksModel.urlTitle;
+    }
     showModalBottomSheet<void>(
       context: context,
       isDismissible: false,
@@ -218,7 +222,12 @@ class Utility{
                               webLinkController.validateUrlFun(true);
                               return;
                             }else{
-                                  insertData(webLinkController);
+                              if(isEdit){
+                                updateData(webLinkController, webLinksModel);
+                              }else{
+                                insertData(webLinkController);
+
+                              }
                             }
                           },
                           child: const Align(
@@ -248,6 +257,14 @@ class Utility{
     final box = await Hive.openBox<WebLinksModel>(hiveBoxName);
     int nextId = await _getNextId(box);
     box.put(nextId, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: nextId,socialMediaType: "Google"));
+    await box.close();
+    weblinkController.getData();
+    Get.back();
+  }
+
+  static void updateData(WeblinkController weblinkController, WebLinksModel weblinkModel) async {
+    final box = await Hive.openBox<WebLinksModel>(hiveBoxName);
+    box.put(weblinkModel.id, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: weblinkModel.id,socialMediaType: "Google"));
     await box.close();
     weblinkController.getData();
     Get.back();
