@@ -32,25 +32,8 @@ class _FeatureViewState extends State<FeatureView> {
 
         ),
         floatingActionButton: FloatingActionButton(onPressed: (){
-          /*var controller = Get.put(WeblinkController());
-          var listSize =controller.list.length;
-          if(listSize > 3){
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                backgroundColor: Colors.red,
-                content: Text(
-                  maxItemError,
-                  textAlign: TextAlign.center,
-                  style:   TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 2,
-                ),
-              ),
-            );
-          }else{
-          }*/
+          var controller = Get.put(WeblinkController());
+          controller.setUrlType("");
           Utility.showBottomSheet(context, WebLinksModel(id: 00, socialMediaType: '', urlTitle: '', url: ''), false);
 
         }, child:  const Icon(Icons.add)),

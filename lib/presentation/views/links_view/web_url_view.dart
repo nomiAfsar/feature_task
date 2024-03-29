@@ -57,6 +57,7 @@ class _URLViewState extends State<URLView> {
                         ),
                       ),
                       IconButton(onPressed: (){
+                        print(linkController.list[index].socialMediaType);
                         linkController.setUrlType(linkController.list[index].socialMediaType);
                         Utility.showBottomSheet(context,linkController.list[index] , true);
 

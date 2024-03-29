@@ -277,7 +277,7 @@ class Utility{
   static void insertData(WeblinkController weblinkController) async {
     final box = await Hive.openBox<WebLinksModel>(hiveBoxName);
     int nextId = await _getNextId(box);
-    box.put(nextId, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: nextId,socialMediaType: "Google"));
+    box.put(nextId, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: nextId,socialMediaType: weblinkController.urlDataType.value));
     await box.close();
     urlTitleController.clear();
     urlController.clear();
