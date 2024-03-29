@@ -150,7 +150,6 @@ class Utility{
                       controller: urlController,
                       maxLength: 25,
                       maxLines: null,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(emojiRegexp))],
                       keyboardType: TextInputType.text,
                       decoration:  InputDecoration(
                         errorText: webLinkController.validateURl.value ? urlErrorText: null,
@@ -216,18 +215,22 @@ class Utility{
                           foregroundColor: Colors.white,
                           fixedSize: const Size(double.infinity, 45)),
                       onPressed: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
                         if(urlTitleController.text.isEmpty){
                           webLinkController.validateUrlTitleFun(true);
                           return;
                         }else if (urlController.text.isEmpty){
                           webLinkController.validateUrlFun(true);
                           return;
+                        }else if(!isValidUrl(urlController.text)){
+                          urlErrorText = "Invalid URL";
+                          webLinkController.validateURl(true);
+                          return;
                         }else{
                           if(isEdit){
                             updateData(webLinkController, webLinksModel);
                           }else{
                             var listSize =webLinkController.list.length;
-                            print(listSize);
                             if(listSize > 2){
                               Get.back();
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -326,5 +329,16 @@ class Utility{
       return Container();
     }
   }
+
+  static bool isValidUrl(String value) {
+    String urlRegexExp =  r'^((?:.|\n)*?)((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:,.;]*)?)';
+    RegExp urlRegex = RegExp(
+      urlRegexExp,
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return urlRegex.hasMatch(value);
+  }
+
 
 }
