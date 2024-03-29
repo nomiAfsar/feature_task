@@ -58,7 +58,7 @@ class _URLViewState extends State<URLView> {
 
                       }, icon: const Icon(Icons.edit_note, color: Colors.green,)),
                       IconButton(onPressed: (){
-
+                              linkController.deleteData(linkController.list[index].id);
                       }, icon: const Icon(Icons.delete, color: Colors.red,)),
 
                     ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:links_feature/data/models/web_links_model.dart';
 import 'package:links_feature/presentation/controllers/web_link_controller.dart';
 
@@ -199,8 +200,7 @@ class Utility{
                           },
                         ))),
 
-
-                    Align(
+                    GetBuilder<WeblinkController>(builder: (webLinkController) =>  Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
@@ -211,7 +211,15 @@ class Utility{
                               foregroundColor: Colors.white,
                               fixedSize: const Size(double.infinity, 45)),
                           onPressed: () {
-
+                            if(urlTitleController.text.isEmpty){
+                              webLinkController.validateUrlTitleFun(true);
+                              return;
+                            }else if (urlController.text.isEmpty){
+                              webLinkController.validateUrlFun(true);
+                              return;
+                            }else{
+                                  insertData(webLinkController);
+                            }
                           },
                           child: const Align(
                             alignment: Alignment.center,
@@ -228,12 +236,30 @@ class Utility{
                         ),
                       ),
                     )
+                    )
                   ],
                 ),
               )),
         ),
       ),
     );
+  }
+  static void insertData(WeblinkController weblinkController) async {
+    final box = await Hive.openBox<WebLinksModel>(hiveBoxName);
+    int nextId = await _getNextId(box);
+    box.put(nextId, WebLinksModel(url: urlController.text, urlTitle: urlTitleController.text, id: nextId,socialMediaType: "Google"));
+    await box.close();
+    weblinkController.getData();
+    Get.back();
+  }
+  static Future<int> _getNextId(Box<WebLinksModel> box) async {
+    int latestId = 0;
+    if (box.isNotEmpty) {
+      final latestItem = box.values.reduce((curr, next) =>
+      (curr.id > next.id) ? curr : next);
+      latestId = latestItem.id;
+    }
+    return latestId + 1;
   }
 
 }

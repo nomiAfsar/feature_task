@@ -13,11 +13,15 @@ class WeblinkController extends GetxController{
   void getData() async {
     var box =  await Hive.openBox<WebLinksModel>(hiveBoxName);
     list = box.values.toList().obs;
+    box.close();
     update();
   }
 
-  void deleteData(int id){
-    update();
+  Future<void> deleteData(int id) async {
+    final box = await Hive.openBox(hiveBoxName);
+    box.delete(id);
+    await box.close();
+    getData();
   }
 
   void validateUrlTitleFun(bool titleValidation){

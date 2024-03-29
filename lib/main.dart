@@ -14,12 +14,6 @@ void main() async {
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(WebLinksModelAdapter());
-  var box = await Hive.openBox(hiveBoxName);
-  WebLinksModel dataModel = WebLinksModel(
-      url: "www.google.com",
-      urlTitle: "Google", id: 0, socialMediaType: '');
-  box.add(dataModel);
-  print(box.getAt(0).url);
   runApp(const MyApp());
 }
 

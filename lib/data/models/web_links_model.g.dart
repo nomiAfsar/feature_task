@@ -17,7 +17,7 @@ class WebLinksModelAdapter extends TypeAdapter<WebLinksModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return WebLinksModel(
-      id: fields[0],
+      id: fields[0] as int,
       socialMediaType: fields[3] as String,
       urlTitle: fields[2] as String,
       url: fields[1] as String,
